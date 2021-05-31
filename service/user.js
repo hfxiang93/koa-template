@@ -1,13 +1,13 @@
 const userModel = require('../model/user')
 const getUserList = async(ctx)=>{
     if ( ctx.session && ctx.session.isLogin && ctx.session.userName ) {
-        return await userModel.query()
+        return await userModel.queryAll()
     }else{
         return '暂无权限'
     }
 }
 const getCurrentUser = async(id)=>{
-    return await userModel.queryOne(id)
+    return await userModel.queryOneById(id)
 }
 const login = async(ctx)=>{
     console.log(ctx.request.body)
@@ -19,23 +19,19 @@ const login = async(ctx)=>{
         return '密码不能为空!'
     }
     if(userName&&password){
-        const sql = `SELECT * FROM users WHERE userName = '${userName}'`
-        const results = await userModel.query(sql)
-        if(results.length === 0){
+        const results = await userModel.queryByName(userName)
+        if(!results){
             return '该用户名不存在'
-        }else if(results[0].userName!==userName){
-            return '该用户名不存在'
-        }else if(results[0].password === password) {
+        }else if(results.password === password) {
             let session = ctx.session
             session.isLogin = true
-            session.userName = results[0].userName
-            session.userId = results[0].id
+            session.userName = results.userName
+            session.userId = results.id
             return '登录成功'
         }else {
             return '密码错误'
         }
     }
-    // return await userModel.queryOne()
 }
 module.exports = {
     getUserList,
