@@ -15,7 +15,7 @@ const getCurrentPower = async (ctx)=>{
         data: {
             power: '获取资源列表'
         },
-        res:'ok'
+        msg:'ok'
     }
 }
 const addPower = async (ctx)=>{
@@ -23,7 +23,7 @@ const addPower = async (ctx)=>{
     ctx.body = {
         code:200,
         data: params,
-        res:'ok'
+        msg:'ok'
     }
 }
 module.exports = {

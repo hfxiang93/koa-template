@@ -2,11 +2,19 @@ const Koa = require('koa')
 const app = new Koa()
 const path = require('path')
 const logGenerator = require('./middleware/logger-generator')
+const koaLogger = require('koa-logger')
 const convert = require('koa-convert')
 const router = require('./router/index')
 const bodyParser = require('koa-bodyparser')
 const staticFn = require('koa-static')
-
+const session = require('koa-session-minimal')
+const MysqlStore = require('koa-mysql-session')
+const sessionMysqlConfig = require('./config/mysql')
+// 配置session中间件
+app.use(session({
+    key: 'USER_SID',
+    store: new MysqlStore(sessionMysqlConfig)
+}))
 const staticPath = './static'
 // 使用静态资源中间件
 app.use(convert(staticFn(
@@ -15,6 +23,7 @@ app.use(convert(staticFn(
 // body请求体解析中间件
 app.use(bodyParser())
 // 使用自定义日志中间件
+app.use(convert(koaLogger()))
 app.use(convert(logGenerator()))
 // 挂载路由
 app.use(router.routes()).use(router.allowedMethods())
