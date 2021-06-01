@@ -6,9 +6,21 @@ const userModel = require('../model/user')
  */
 const getUserList = async(ctx)=>{
     if ( ctx.session && ctx.session.isLogin && ctx.session.userName ) {
-        const result =  await userModel.findAll({
+        const {page,pageSize} = ctx.request.query
+        const list =  await userModel.findAll({
+            offset: (Number(page)-1|| 0)*Number(pageSize),
+            limit: Number(pageSize) || 999,
             attributes:['userName','realName','tel','email','remark']
         })
+        const total = await userModel.count()
+        const totalPage = Math.ceil(total/pageSize)
+        const result = {
+            list,
+            page:Number(page),
+            pageSize:Number(pageSize),
+            total,
+            totalPage
+        }
         ctx.body = {
             code: 200,
             data: result,
