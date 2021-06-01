@@ -2,6 +2,7 @@ const Router = require('koa-router')
 const path = require('path')
 let upload = new Router()
 const { uploadFile } = require('../util/upload')
+// 上传
 upload.post('/',async ( ctx ) => {
         // 上传文件请求处理
         let result = { success: false }

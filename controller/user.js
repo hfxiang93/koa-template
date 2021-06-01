@@ -1,31 +1,39 @@
 const userService = require('../service/user')
+/**
+ * 获取用户列表
+ * @param ctx
+ * @returns {Promise<void>}
+ */
 const getUserList = async (ctx)=>{
-    let result = await userService.getUserList(ctx)
-    ctx.body = {
-        code: 200,
-        data: result,
-        msg: 'ok'
-    }
+    await userService.getUserList(ctx)
 }
+/**
+ * 获取当前用户信息
+ * @param ctx
+ * @returns {Promise<void>}
+ */
 const getCurrentUser = async (ctx)=>{
-    let { id } = ctx.request.query
-    let result = await userService.getCurrentUser(id)
-    ctx.body = {
-        code: 200,
-        data: result,
-        msg: 'ok'
-    }
+    await userService.getCurrentUser(ctx)
 }
+/**
+ * 登录
+ * @param ctx
+ * @returns {Promise<void>}
+ */
 const login = async (ctx)=>{
-    const result = await userService.login(ctx)
-    ctx.body = {
-        code: 200,
-        data: result,
-        msg: 'ok'
-    }
+    await userService.login(ctx)
+}
+/**
+ * 新增用户
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+const addUser = async (ctx)=>{
+    await userService.addUser(ctx)
 }
 module.exports = {
     getUserList,
     getCurrentUser,
-    login
+    login,
+    addUser
 }
