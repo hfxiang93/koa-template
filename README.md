@@ -1,1 +1,17 @@
 # koa-template
+### 使用的技术栈
+1. koa2
+2. koa-bodyparser,koa-router,koa-static
+3. 使用sequelize和Mysql2连接数据库
+4. 使用koa-mysql-session和koa-session-minimal做session鉴权
+5. 使用busboy做上传
+6. 自定义中间件log-generator打印日志
+### 系统功能
+1. 登录系统
+2. 新增用户
+3. 查询用户列表
+4. 查询单个用户信息
+5. 上传文件
+6. 更新用户信息
+7. 删除用户信息
+8. 查看静态资源

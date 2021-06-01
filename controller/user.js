@@ -31,9 +31,27 @@ const login = async (ctx)=>{
 const addUser = async (ctx)=>{
     await userService.addUser(ctx)
 }
+/**
+ * 修改用户信息
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+const updateUser = async (ctx)=>{
+    await userService.updateUser(ctx)
+}
+/**
+ * 删除用户
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+const deleteUser = async (ctx)=>{
+    await userService.deleteUser(ctx)
+}
 module.exports = {
     getUserList,
     getCurrentUser,
     login,
-    addUser
+    addUser,
+    updateUser,
+    deleteUser
 }

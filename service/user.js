@@ -108,10 +108,10 @@ const addUser = async (ctx)=>{
             try{
                 const res = await userModel.create(ctx.request.body);
                 if (res) {
-                    return await userModel.findAll({
+                    ctx.body.data = await userModel.findAll({
                         attributes:['userName','realName','tel','email','remark'],
                         where:{
-                            id:res.id
+                            userName:userName
                         }
                     })
                 }
@@ -123,9 +123,96 @@ const addUser = async (ctx)=>{
         }
     }
 }
+/**
+ * 更新用户信息
+ * @param ctx
+ * @returns {Promise<Model[]>}
+ */
+const updateUser = async (ctx)=>{
+    console.log(ctx.request.body)
+    ctx.body = {
+        code: 200,
+        data: {},
+        msg: 'ok'
+    }
+    const { id } = ctx.request.body
+    if (!id){
+        ctx.body.data = 'id不能为空!'
+    }
+    if(id){
+        const results = await userModel.findAll({
+            where: {
+                id:id
+            }
+        })
+        if(results.length === 0){
+            ctx.body.data = '该用户名不存在'
+        }else {
+            try{
+                const res = await userModel.update(ctx.request.body,{
+                    where:{
+                        id:id
+                    }
+                });
+                if (res) {
+                    ctx.body.data = await userModel.findAll({
+                        attributes:['userName','realName','tel','email','remark'],
+                        where:{
+                            id:results[0].id
+                        }
+                    })
+                }
+            }catch (e) {
+                ctx.body.data = e
+            }
+        }
+    }
+}
+/**
+ * 删除用户信息
+ * @param ctx
+ * @returns {Promise<Model[]>}
+ */
+const deleteUser = async (ctx)=>{
+    console.log(ctx.request.body)
+    ctx.body = {
+        code: 200,
+        data: {},
+        msg: 'ok'
+    }
+    const { id } = ctx.request.body
+    if (!id){
+        ctx.body.data = 'id不能为空!'
+    }
+    if(id){
+        const results = await userModel.findAll({
+            where: {
+                id:id
+            }
+        })
+        if(results.length === 0){
+            ctx.body.data = '该用户不存在'
+        }else {
+            try{
+                const res = await userModel.destroy({
+                    where:{
+                        id:id
+                    }
+                });
+                if (res) {
+                    ctx.body.data = '删除成功'
+                }
+            }catch (e) {
+                ctx.body.data = e
+            }
+        }
+    }
+}
 module.exports = {
     getUserList,
     getCurrentUser,
     login,
-    addUser
+    addUser,
+    updateUser,
+    deleteUser
 }
