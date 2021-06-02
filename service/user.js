@@ -40,17 +40,29 @@ const getUserList = async(ctx)=>{
  * @returns {Promise<Model[]>}
  */
 const getCurrentUser = async(ctx)=>{
+    ctx.body = {
+        code: 200,
+        data: {},
+        msg: 'ok'
+    }
     let { id } = ctx.request.query
+    if (!id){
+        ctx.body.data = '用户id不能为空!'
+    }
     const result =  await userModel.findOne({
         attributes:['userName','realName','tel','email','remark'],
         where:{
-            roleId:id
+            id:id
         }
     })
-    ctx.body = {
-        code: 200,
-        data: result,
-        msg: 'ok'
+    if(!result){
+        ctx.body.data = '该用户不存在'
+    }else{
+        ctx.body = {
+            code: 200,
+            data: result,
+            msg: 'ok'
+        }
     }
 }
 /**
