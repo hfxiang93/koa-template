@@ -27,6 +27,15 @@ app.use(convert(koaLogger()))
 app.use(convert(logGenerator()))
 // 挂载路由
 app.use(router.routes()).use(router.allowedMethods())
+app.use(async (ctx, next) => {
+    try {
+        await next();
+    } catch (err) {
+        // 只返回 JSON 格式的响应
+        ctx.status = err.status || 500;
+        ctx.body = { message: err.message };
+    }
+});
 
 app.listen(3000)
 console.log('app is running at port 3000')

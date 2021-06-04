@@ -8,10 +8,10 @@ user.post('/adduser',controller.user.addUser)
 // 修改用户
 user.post('/updateUser',controller.user.updateUser)
 // 删除用户
-user.post('/deleteUser',controller.user.deleteUser)
+user.post('/deleteUser/:id',controller.user.deleteUser)
 // 获取所有用户列表
 user.get('/userList',controller.user.getUserList)
 // 获取当前用户信息
-user.get('/currentUser', controller.user.getCurrentUser)
+user.get('/currentUser/:id', controller.user.getCurrentUser)
 
 module.exports = user
