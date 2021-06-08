@@ -6,6 +6,7 @@
 4. 使用koa-mysql-session和koa-session-minimal做session鉴权
 5. 使用busboy做上传
 6. 自定义中间件log-generator打印日志
+7. 使用sequelize链接数据库
 ### 系统功能
 1. 登录系统
 2. 新增用户
